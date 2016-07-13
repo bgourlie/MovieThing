@@ -36,8 +36,8 @@ class GraphImpl(val _nodeCount: Int): Graph {
     }
 
     private fun makeAdjacent(nodes: Array<MutableMap<Int, Edge>>, nodeIds: Array<Int>, edge: Edge) {
-        for (i: Int in 0..nodeIds.size) {
-            for (j: Int in 0..nodeIds.size) {
+        for (i in 0..nodeIds.size) {
+            for (j in 0..nodeIds.size) {
                 if (i == j) {
                     continue
                 }
