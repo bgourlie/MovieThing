@@ -4,7 +4,7 @@ import getBytes
 import java.io.OutputStream
 import java.util.*
 
-class GraphImpl(val _nodeCount: Int): Graph {
+class GraphImpl(val _nodeCount: Int) : Graph {
 
     /**
      * An array of nodes where the array index is the node id (actor id).

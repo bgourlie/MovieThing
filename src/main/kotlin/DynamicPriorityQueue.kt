@@ -11,7 +11,7 @@ class DynamicPriorityQueue<TNode, TMetadata> {
 
     private fun insert(item: TNode, key: Int, metaData: TMetadata) {
         val addedAt: Int
-        if(ubound == nodes.size - 1) {
+        if (ubound == nodes.size - 1) {
             nodes.add(item)
             keys.add(Pair(key, metaData))
             addedAt = 0
@@ -25,21 +25,21 @@ class DynamicPriorityQueue<TNode, TMetadata> {
         balanceUp(++ubound)
     }
 
-    fun peekMin() : TNode = nodes[0]
+    fun peekMin(): TNode = nodes[0]
 
-    fun getPriority(node: TNode) : Optional<Int> {
+    fun getPriority(node: TNode): Optional<Int> {
         val index = indices[node] ?: return Optional.empty()
         return Optional.of(keys[index].first)
     }
 
-    fun getNodeMetadata(node: TNode) : Optional<TMetadata> {
+    fun getNodeMetadata(node: TNode): Optional<TMetadata> {
         // keys[indices[node]!!].second
         val index = indices[node] ?: return Optional.empty()
         return Optional.of(keys[index].second)
     }
 
-    fun extractMin() : Optional<TNode> {
-        if(ubound == -1) {
+    fun extractMin(): Optional<TNode> {
+        if (ubound == -1) {
             return Optional.empty()
         }
 
@@ -55,7 +55,7 @@ class DynamicPriorityQueue<TNode, TMetadata> {
         val index = indices[node]!!
         val curPriority = keys[index]
 
-        if(curPriority.first == newPriority || newPriority > curPriority.first) {
+        if (curPriority.first == newPriority || newPriority > curPriority.first) {
             return
         }
 
@@ -91,7 +91,7 @@ class DynamicPriorityQueue<TNode, TMetadata> {
         }
 
         // compare the current node with the smaller of the two child nodes
-        if(keys[index].first > keys[indexToSwap].first) {
+        if (keys[index].first > keys[indexToSwap].first) {
             // if the current node is bigger than the smaller of the two children,
             // then continue to push that node down by swapping the two nodes
             swapNodes(index, indexToSwap)
@@ -100,13 +100,13 @@ class DynamicPriorityQueue<TNode, TMetadata> {
     }
 
     private tailrec fun balanceUp(index: Int) {
-        if(index == 0) {
+        if (index == 0) {
             return
         }
 
         val parentIndex = index / 2
 
-        if(keys[index].first < keys[parentIndex].first) {
+        if (keys[index].first < keys[parentIndex].first) {
             swapNodes(index, parentIndex)
             balanceUp(parentIndex)
         }

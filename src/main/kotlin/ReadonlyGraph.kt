@@ -13,13 +13,14 @@ class ReadonlyGraph : Graph {
         this.edgeCount = edgeCount
     }
 
-    fun getActorById(id: Int) : String? {
+    fun getActorById(id: Int): String? {
         return actorTable[id]
     }
 
-    fun getShortestPath(fromNode: Int, toNode: Int) : List<Segment> {
+    fun getShortestPath(fromNode: Int, toNode: Int): List<Segment> {
         val paths = emptyMap<Int, Segment>() as MutableMap
-        // Assign to every node a tentative distance value: set it to zero for our initial node and to infinity for all other nodes.
+        // Assign to every node a tentative distance value: set it to zero for our initial node and to infinity for all
+        // other nodes.
         val distances = DynamicPriorityQueue<Int, Segment>()
         distances.insertOrIncreasePriority(fromNode, 0, Segment(-1, -1, Edge(-1, 0)))
 
@@ -35,13 +36,13 @@ class ReadonlyGraph : Graph {
 
             val curDistance = distances.getPriority(curNode).orElseThrow { RuntimeException("Shouldn't happen") }
             for ((adjacentNode, edge) in nodes[curNode]) {
-                if(curNode in visited) {
+                if (curNode in visited) {
                     continue
                 }
 
                 val currentBestDistance = distances.getPriority(adjacentNode).orElse(Int.MAX_VALUE)
                 val testDistance = curDistance + edge.distance
-                if(testDistance < currentBestDistance) {
+                if (testDistance < currentBestDistance) {
                     distances.insertOrIncreasePriority(adjacentNode, testDistance, Segment(adjacentNode, curNode, edge))
                 }
             }
@@ -51,12 +52,12 @@ class ReadonlyGraph : Graph {
             visited.add(curNode)
 
             // If the destination node has been marked visited, the algorithm has finished.
-            if(curNode == toNode) {
+            if (curNode == toNode) {
                 val shortestPath = emptyList<Segment>() as MutableList
                 var segment = distances.getNodeMetadata(toNode).orElseThrow { RuntimeException("Shouldn't happen") }
                 shortestPath.add(segment)
                 var nextNode = segment.otherNode
-                while(nextNode != fromNode) {
+                while (nextNode != fromNode) {
                     segment = paths[nextNode]
                     shortestPath.add(segment)
                     nextNode = segment.otherNode
